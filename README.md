@@ -14,13 +14,13 @@ An interactive wheel of balance for everyday AI use: nine areas of life, and fou
    - **Agent** – it acts, you approve.
 3. Each step opens a card with the tool, what to prepare, a prompt to copy, and the point where a human says yes.
 
-That makes 36 concrete scenarios for private, non-work use.
+Each step lists real published stories (with source link, date and a confidence note) plus a few demo ideas, each tagged with the tools used (ChatGPT, Claude, NotebookLM, Gemini and others). The stories were collected by research agents and the links have not all been checked by hand.
 
 ## Use it
 
 The page is a single self-contained `index.html` with no build step. Open it in a browser, or host it anywhere that serves static files. Left and right arrow keys move between steps.
 
-To change a scenario, edit the `DATA` array in `index.html`. Each card has four fields: `s` (scenario), `p` (what to prepare), `q` (prompt) and `y` (where the human says yes).
+To change a scenario, edit the `DATA` array in `index.html`. Each case is one `C(...)` call: title, story, wow line, tool tags, what to prepare, prompt, where the human says yes, then source name, date, link and confidence. A case with no source is shown as a demo idea.
 
 ## Background
 
