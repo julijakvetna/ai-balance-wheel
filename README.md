@@ -1,6 +1,6 @@
 # AI Balance Wheel
 
-An interactive wheel of balance for everyday AI use: nine areas of life, and four ways to use AI in each.
+An interactive wheel of balance for everyday AI use: nine areas of life, and four ways to use AI in each. The page content is in Russian.
 
 **Live page:** https://julijakvetna.github.io/ai-balance-wheel/
 
@@ -19,6 +19,8 @@ That makes 36 concrete scenarios for private, non-work use.
 ## Use it
 
 The page is a single self-contained `index.html` with no build step. Open it in a browser, or host it anywhere that serves static files. Left and right arrow keys move between steps.
+
+To change a scenario, edit the `DATA` array in `index.html`. Each card has four fields: `s` (scenario), `p` (what to prepare), `q` (prompt) and `y` (where the human says yes).
 
 ## Background
 

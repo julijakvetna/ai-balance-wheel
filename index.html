@@ -1,85 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Balance Wheel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* Layout idea: the wheel is the map (left), the ladder of four rungs is the route (right), one open card is the destination. */
+/* Layout idea: the wheel is the map (left), the ladder of four steps is the route (right), one open card is the destination. Warm paper, royal blue for the route, orange for the human "yes". */
 :root{
-  --bg:#f3f5f4; --surface:#ffffff; --ink:#15202b; --muted:#56636e; --line:#d6dddb;
-  --accent:#0f6b63; --on-accent:#ffffff; --accent-soft:#dcefeb;
-  --stop:#8a5200; --stop-soft:#fbefd6;
-  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
-  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --bg:#f9f2e4; --surface:#fffdf8; --ink:#1d2a4d; --muted:#5a6280; --line:#e4d8c0;
+  --accent:#27489b; --on-accent:#ffffff; --accent-soft:#e2e8f6;
+  --warm:#e8873a; --stop:#a94a06; --stop-soft:#fde5cc;
+  --display:"Caveat","Segoe Print","Comic Sans MS",cursive;
+  --body:"PT Sans","Segoe UI",system-ui,sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --bg:#10171c; --surface:#18222a; --ink:#e8eef0; --muted:#9aa8b1; --line:#2b3943;
-    --accent:#5cc9bb; --on-accent:#0b1a18; --accent-soft:#173b38;
-    --stop:#f0b95a; --stop-soft:#3a2c10;
+    --bg:#131a2e; --surface:#1b2440; --ink:#f3ecdd; --muted:#a7afc8; --line:#2f3b60;
+    --accent:#93abf0; --on-accent:#0f1630; --accent-soft:#25325c;
+    --warm:#f2a25c; --stop:#f5ae6e; --stop-soft:#40280f;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --bg:#10171c; --surface:#18222a; --ink:#e8eef0; --muted:#9aa8b1; --line:#2b3943;
-  --accent:#5cc9bb; --on-accent:#0b1a18; --accent-soft:#173b38;
-  --stop:#f0b95a; --stop-soft:#3a2c10;
+  --bg:#131a2e; --surface:#1b2440; --ink:#f3ecdd; --muted:#a7afc8; --line:#2f3b60;
+  --accent:#93abf0; --on-accent:#0f1630; --accent-soft:#25325c;
+  --warm:#f2a25c; --stop:#f5ae6e; --stop-soft:#40280f;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5}
 .page{max-width:1180px;margin:0 auto;padding:24px 16px 40px}
-header{display:flex;flex-direction:column;gap:4px;margin-bottom:20px}
-h1{font-family:var(--display);font-weight:700;font-size:clamp(26px,4vw,40px);line-height:1.1;margin:0;text-wrap:balance}
-.sub{color:var(--muted);margin:0;max-width:60ch}
+header{display:flex;flex-direction:column;gap:2px;margin-bottom:20px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(36px,6vw,58px);line-height:1;margin:0;color:var(--accent);text-wrap:balance}
+h1 span{color:var(--warm)}
+.sub{color:var(--muted);margin:6px 0 0;max-width:62ch}
 .grid{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
 @media (min-width:900px){.grid{grid-template-columns:minmax(0,460px) minmax(0,1fr);align-items:start}}
 .wheelbox{display:flex;flex-direction:column;gap:8px;align-items:center}
 #wheel{width:100%;max-width:460px;height:auto;display:block}
 .wedge{cursor:pointer;outline:none}
 .wedge path{fill:var(--surface);stroke:var(--bg);stroke-width:3;transition:fill .15s}
-.wedge text{fill:var(--ink);font-family:var(--body);font-size:15px;font-weight:500;pointer-events:none}
-.wedge:hover path{fill:var(--accent-soft)}
-.wedge:focus-visible path{stroke:var(--accent);stroke-width:3}
+.wedge text{fill:var(--ink);font-family:var(--body);font-size:16px;font-weight:700;pointer-events:none}
+.wedge:hover path{fill:var(--stop-soft)}
+.wedge:focus-visible path{stroke:var(--warm);stroke-width:4}
 .wedge.on path{fill:var(--accent)}
-.wedge.on text{fill:var(--on-accent);font-weight:600}
-.hub{fill:var(--bg)}
-.hubt{fill:var(--muted);font-family:var(--display);font-size:15px;font-weight:500}
-.hint{color:var(--muted);font-size:14px;margin:0;text-align:center}
+.wedge.on text{fill:var(--on-accent)}
+.hub{fill:var(--warm)}
+.hubt{fill:var(--surface);font-family:var(--display);font-size:26px;font-weight:700}
+.hint{color:var(--muted);font-size:15px;margin:0;text-align:center}
 .panel{display:flex;flex-direction:column;gap:16px;min-width:0}
-.sector h2{font-family:var(--display);font-weight:700;font-size:clamp(24px,3vw,32px);line-height:1.15;margin:0}
-.sector p{margin:2px 0 0;color:var(--muted)}
+.sector h2{font-family:var(--display);font-weight:700;font-size:clamp(34px,4.5vw,46px);line-height:1;margin:0;color:var(--warm)}
+.sector p{margin:4px 0 0;color:var(--muted)}
 .ladder{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 @media (min-width:640px){.ladder{grid-template-columns:repeat(4,minmax(0,1fr))}}
-.rung{font:inherit;text-align:left;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-height:64px}
+.rung{font:inherit;text-align:left;background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-height:72px}
 .rung:hover{border-color:var(--accent)}
-.rung:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.rung .n{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
-.rung .t{font-weight:600;line-height:1.2}
-.rung .m{font-size:13px;color:var(--muted);line-height:1.25}
+.rung:focus-visible{outline:2px solid var(--warm);outline-offset:2px}
+.rung .n{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.rung .t{font-weight:700;line-height:1.2}
+.rung .m{font-size:14px;color:var(--muted);line-height:1.25}
 .rung[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .rung[aria-selected="true"] .n,.rung[aria-selected="true"] .m{color:var(--on-accent);opacity:.85}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:16px}
-.card h3{font-family:var(--display);font-weight:500;font-size:22px;line-height:1.2;margin:0;text-wrap:balance}
+.card{background:var(--surface);border:1.5px dashed var(--warm);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.card h3{font-weight:700;font-size:23px;line-height:1.25;margin:0;text-wrap:balance}
 .field{display:flex;flex-direction:column;gap:4px}
-.label{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.02em}
+.label{font-size:14px;font-weight:700;color:var(--muted)}
 .field p{margin:0;max-width:65ch}
 .prompt{background:var(--accent-soft);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px}
-.prompt p{font-size:17px;line-height:1.45}
-.copy{font:inherit;font-size:14px;font-weight:500;align-self:flex-start;background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:8px;padding:6px 12px;cursor:pointer}
+.prompt p{font-size:18px;line-height:1.45}
+.copy{font:inherit;font-size:15px;font-weight:700;align-self:flex-start;background:transparent;color:var(--accent);border:1.5px solid var(--accent);border-radius:8px;padding:6px 12px;cursor:pointer}
 .copy:hover{background:var(--accent);color:var(--on-accent)}
-.copy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.yes{background:var(--stop-soft);border-left:4px solid var(--stop);padding:12px 14px}
+.copy:focus-visible{outline:2px solid var(--warm);outline-offset:2px}
+.yes{background:var(--stop-soft);border-left:4px solid var(--warm);padding:12px 14px}
 .yes .label{color:var(--stop)}
 .nav{display:flex;justify-content:space-between;gap:8px}
-.nav button{font:inherit;font-size:14px;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 12px;cursor:pointer}
+.nav button{font:inherit;font-size:15px;background:transparent;color:var(--ink);border:1.5px solid var(--line);border-radius:8px;padding:8px 14px;cursor:pointer}
 .nav button:hover{border-color:var(--accent)}
-.nav button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.nav button:focus-visible{outline:2px solid var(--warm);outline-offset:2px}
 .nav button:disabled{color:var(--muted);cursor:default;border-color:var(--line);opacity:.5}
 @media (prefers-reduced-motion: reduce){.wedge path{transition:none}}
 </style>
@@ -87,85 +88,86 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(26px,4vw,40px);lin
 <body>
 <div class="page">
   <header>
-    <h1>AI on the wheel of balance</h1>
-    <p class="sub">Nine parts of life, four ways to use AI in each. Pick a sector, then climb from a simple chat to an agent that acts for you.</p>
+    <h1>ИИ <span>на колесе баланса</span></h1>
+    <p class="sub">Девять сфер жизни и четыре способа применить ИИ в каждой. Выберите сектор и поднимайтесь от простого чата до агента, который действует за вас.</p>
   </header>
   <div class="grid">
     <div class="wheelbox">
-      <svg id="wheel" viewBox="0 0 460 460" role="group" aria-label="Wheel of balance: nine sectors"></svg>
-      <p class="hint">Tap a sector. Use the four steps on the right to climb.</p>
+      <svg id="wheel" viewBox="0 0 460 460" role="group" aria-label="Колесо баланса: девять секторов"></svg>
+      <p class="hint">Нажмите на сектор. Четыре шага справа ведут вверх по лестнице.</p>
     </div>
     <div class="panel">
       <div class="sector"><h2 id="sname"></h2><p id="stag"></p></div>
-      <div class="ladder" id="ladder" role="tablist" aria-label="Four ways to use AI"></div>
+      <div class="ladder" id="ladder" role="tablist" aria-label="Четыре способа применить ИИ"></div>
       <div class="card" id="card" role="tabpanel"></div>
-      <div class="nav"><button id="prev" type="button">Previous step</button><button id="next" type="button">Next step</button></div>
+      <div class="nav"><button id="prev" type="button">Назад</button><button id="next" type="button">Следующий шаг</button></div>
     </div>
   </div>
 </div>
 <script>
 var RUNGS=[
- {t:"Chat",m:"You ask, it answers",tool:"Any chat assistant: Claude, ChatGPT or Gemini."},
- {t:"Project",m:"It remembers your files",tool:"A project in Claude or ChatGPT, connected to one Google Drive folder."},
- {t:"Scheduled task",m:"It starts by itself",tool:"A scheduled task in Claude or ChatGPT, reading the same folder."},
- {t:"Agent",m:"It acts, you approve",tool:"Agent mode with connected Gmail, Calendar, Drive or a browser."}
+ {t:"Чат",m:"Вы спрашиваете, он отвечает",tool:"Любой чат-ассистент: Claude, ChatGPT или Gemini."},
+ {t:"Проект",m:"Помнит ваши файлы",tool:"Проект в Claude или ChatGPT, подключённый к одной папке на Google Диске."},
+ {t:"По расписанию",m:"Запускается сам",tool:"Запланированная задача в Claude или ChatGPT, которая читает ту же папку."},
+ {t:"Агент",m:"Действует, вы подтверждаете",tool:"Режим агента с подключёнными Gmail, Календарём, Диском или браузером."}
 ];
 var DATA=[
-{id:"health",name:"Health",tag:"Body, check-ups, food and movement.",c:[
- {s:"Understand a blood test before the doctor's visit",p:"A photo or PDF of the results. Cover your name and ID number first.",q:"Here are my blood test results. Explain each value outside the normal range in plain words, and give me five questions to ask my doctor.",y:"The doctor decides what it means. You bring questions, not a diagnosis."},
- {s:"A health file that remembers your history",p:"A Drive folder \"Health\": test results by date, doctor notes, a medication list and one page about you.",q:"Using my health folder, show how my iron and vitamin D changed over the last three tests and what my doctors said each time.",y:"You check every number against the original document."},
- {s:"A meal and movement plan every week",p:"In the health folder: a page with your goals, foods you avoid and your weekly schedule.",q:"Every Sunday at 18:00, write a meal plan and three workouts for the coming week based on my goals page. Add a shopping list.",y:"You adjust the plan. Nothing is ordered or booked."},
- {s:"A doctor's appointment, ready to confirm",p:"Calendar connected. You log in to the clinic's website yourself.",q:"Find the earliest appointment with my family doctor on a weekday after 16:00, check it against my calendar and prepare the booking. Stop before confirming.",y:"You press Confirm on the booking."}
+{id:"health",name:"Здоровье",tag:"Тело, обследования, питание и движение.",c:[
+ {s:"Разобраться в анализе крови перед визитом к врачу",p:"Фото или PDF результатов. Сначала закройте имя и персональный код.",q:"Вот результаты моего анализа крови. Объясни простыми словами каждый показатель, который выходит за норму, и дай пять вопросов, которые стоит задать врачу.",y:"Что это значит, решает врач. Вы приносите вопросы, а не диагноз."},
+ {s:"Медицинская папка, которая помнит вашу историю",p:"Папка «Здоровье» на Диске: анализы по датам, заключения врачей, список лекарств и страница о вас.",q:"По моей папке «Здоровье» покажи, как менялись железо и витамин D за три последних анализа и что каждый раз говорили врачи.",y:"Каждую цифру вы сверяете с оригиналом документа."},
+ {s:"План питания и движения каждую неделю",p:"В папке «Здоровье»: страница с целями, продуктами, которых вы избегаете, и расписанием недели.",q:"Каждое воскресенье в 18:00 составляй план питания и три тренировки на неделю по моей странице с целями. Добавь список покупок.",y:"План вы правите сами. Ничего не заказывается и не бронируется."},
+ {s:"Запись к врачу, готовая к подтверждению",p:"Подключён календарь. На сайт клиники вы входите сами.",q:"Найди ближайшую запись к моему семейному врачу в будний день после 16:00, сверь с моим календарём и подготовь запись. Остановись перед подтверждением.",y:"Кнопку «Подтвердить» нажимаете вы."}
 ]},
-{id:"work",name:"Work",tag:"Your own career: emails, applications, meetings.",c:[
- {s:"Rewrite a difficult email",p:"The email you received and what you want to achieve.",q:"Here's an email I received and my rough reply. Rewrite my reply so it's firm, polite and under 120 words. Keep my main point: [your point].",y:"You read it aloud once and send it yourself."},
- {s:"Tailored applications from one career file",p:"A Drive folder \"Career\": your CV, achievements with numbers and two cover letters you like.",q:"Here's a vacancy. Using my career folder, write a cover letter that uses only achievements from my file and matches the tone of my examples.",y:"You check that every claim is true and yours."},
- {s:"A Monday digest of vacancies and news",p:"A page describing the roles, locations and salary range you'd consider.",q:"Every Monday at 8:00, find new vacancies that fit my profile page and three industry news items. Give each one line and a link.",y:"You decide where to apply."},
- {s:"Tomorrow's meetings, prepared",p:"Gmail and Calendar connected.",q:"For tomorrow's meetings, read the related email threads, then draft an agenda and three talking points for each. Save them as a doc in my Drive.",y:"You approve the agenda before anyone else sees it."}
+{id:"work",name:"Работа",tag:"Ваша карьера: письма, отклики, встречи.",c:[
+ {s:"Переписать трудное письмо",p:"Письмо, которое вы получили, и результат, которого хотите добиться.",q:"Вот письмо, которое я получил, и мой черновик ответа. Перепиши ответ так, чтобы он был твёрдым, вежливым и не длиннее 120 слов. Сохрани главную мысль: [ваша мысль].",y:"Вы читаете текст вслух и отправляете сами."},
+ {s:"Отклики на вакансии из одной карьерной папки",p:"Папка «Карьера» на Диске: резюме, достижения с цифрами и два сопроводительных письма, которые вам нравятся.",q:"Вот вакансия. По моей папке «Карьера» напиши сопроводительное письмо: бери только достижения из моего файла и держи тон моих примеров.",y:"Вы проверяете, что каждое утверждение правдиво и ваше."},
+ {s:"Дайджест вакансий и новостей по понедельникам",p:"Страница с ролями, городами и уровнем зарплаты, которые вам интересны.",q:"Каждый понедельник в 8:00 находи новые вакансии под мой профиль и три новости отрасли. К каждой дай одну строку и ссылку.",y:"Куда откликаться, решаете вы."},
+ {s:"Завтрашние встречи подготовлены",p:"Подключены Gmail и календарь.",q:"К завтрашним встречам прочитай связанные цепочки писем, составь повестку и три тезиса для каждой. Сохрани документом на моём Диске.",y:"Вы утверждаете повестку до того, как её увидят другие."}
 ]},
-{id:"money",name:"Money",tag:"Budget, bills, offers and subscriptions.",c:[
- {s:"Compare two offers side by side",p:"Both offers as PDFs or photos.",q:"Compare these two insurance offers in a table: price per year, what is covered, what is excluded and the cancellation terms. Tell me what to ask each company.",y:"You verify the terms in the contract before signing."},
- {s:"A budget you can question",p:"A Drive folder \"Money\": monthly bank statement exports, a budget sheet and a list of regular payments.",q:"Sort last month's statement into categories, compare it with my budget sheet and show the three biggest differences.",y:"You check the totals against your bank app."},
- {s:"A spending review on the 1st of the month",p:"Each month, drop the new statement into the money folder.",q:"On the 1st of each month, review the newest statement in my money folder: spending by category, changes from last month and subscriptions I may have forgotten.",y:"You cancel subscriptions yourself."},
- {s:"This month's bills, collected and listed",p:"Gmail and Drive connected. A folder \"Bills to pay\".",q:"Find all invoices that arrived by email this month, save them to \"Bills to pay\" and make a list with amount, due date and payee. Do not pay anything.",y:"You make every payment in your bank app."}
+{id:"money",name:"Деньги",tag:"Бюджет, счета, предложения и подписки.",c:[
+ {s:"Сравнить два предложения бок о бок",p:"Оба предложения в PDF или на фото.",q:"Сравни эти два страховых предложения в таблице: цена за год, что покрывается, что исключено и условия расторжения. Подскажи, что спросить у каждой компании.",y:"Перед подписанием вы сверяете условия с договором."},
+ {s:"Бюджет, которому можно задавать вопросы",p:"Папка «Деньги» на Диске: выписки из банка по месяцам, таблица бюджета и список регулярных платежей.",q:"Разложи выписку за прошлый месяц по категориям, сравни с моей таблицей бюджета и покажи три самых больших расхождения.",y:"Итоги вы сверяете с приложением банка."},
+ {s:"Обзор расходов первого числа",p:"Каждый месяц кладите новую выписку в папку «Деньги».",q:"Первого числа каждого месяца разбирай свежую выписку из папки «Деньги»: расходы по категориям, изменения к прошлому месяцу и подписки, о которых я мог забыть.",y:"Подписки вы отменяете сами."},
+ {s:"Счета за месяц собраны в один список",p:"Подключены Gmail и Диск. Папка «Счета к оплате».",q:"Найди все счета, которые пришли на почту в этом месяце, сохрани их в «Счета к оплате» и составь список: сумма, срок и получатель. Ничего не оплачивай.",y:"Каждый платёж вы делаете сами в приложении банка."}
 ]},
-{id:"family",name:"Family",tag:"School, schedules, meals and who drives whom.",c:[
- {s:"Dinners and one shopping list for the week",p:"Nothing. Just say who eats what.",q:"Plan seven dinners for two adults and a teenager. We keep kosher, cook 30 minutes at most on weekdays and don't like mushrooms. Add one shopping list grouped by shop section.",y:"You swap the dishes nobody will eat."},
- {s:"A family headquarters that knows the schedules",p:"A Drive folder \"Family\": school letters, timetables, club schedules and a page with everyone's regular commitments.",q:"Using the family folder, what does each of us have this Thursday, and who needs to be driven where?",y:"You check dates against the original school letter."},
- {s:"The week ahead, every Sunday evening",p:"Family folder up to date. Calendar connected.",q:"Every Sunday at 19:00, send me the week ahead: each person's events by day, clashes, and what must be bought, signed or paid.",y:"You decide how to solve the clashes."},
- {s:"School email, sorted and answered in draft",p:"Gmail, Calendar and the family folder connected.",q:"Read this week's emails from school. Add dates to the family calendar, save attachments to the family folder and draft replies where the school asks for an answer. Don't send anything.",y:"You send the replies and make any payments."}
+{id:"family",name:"Семья",tag:"Школа, расписания, еда и кто кого везёт.",c:[
+ {s:"Ужины и один список покупок на неделю",p:"Ничего. Просто скажите, кто что ест.",q:"Составь семь ужинов для двух взрослых и подростка. Мы соблюдаем кашрут, в будни готовим не дольше 30 минут и не любим грибы. Добавь один список покупок по отделам магазина.",y:"Блюда, которые никто не станет есть, вы заменяете."},
+ {s:"Семейный штаб, который знает все расписания",p:"Папка «Семья» на Диске: письма из школы, расписания уроков и кружков, страница с регулярными делами каждого.",q:"По папке «Семья»: что у каждого из нас в этот четверг и кого куда нужно отвезти?",y:"Даты вы сверяете с оригиналом письма из школы."},
+ {s:"Неделя вперёд каждое воскресенье вечером",p:"Папка «Семья» актуальна. Подключён календарь.",q:"Каждое воскресенье в 19:00 присылай неделю вперёд: события каждого по дням, накладки и что нужно купить, подписать или оплатить.",y:"Как развести накладки, решаете вы."},
+ {s:"Школьная почта разобрана, ответы в черновиках",p:"Подключены Gmail, календарь и папка «Семья».",q:"Прочитай письма из школы за эту неделю. Внеси даты в семейный календарь, сохрани вложения в папку «Семья» и подготовь ответы там, где школа ждёт ответа. Ничего не отправляй.",y:"Ответы отправляете и платежи делаете вы."}
 ]},
-{id:"friends",name:"Friends",tag:"Relationships, birthdays and time together.",c:[
- {s:"Prepare a hard conversation",p:"Nothing. Describe the situation without real names.",q:"I need to tell a close friend that I can't lend them money again. Help me say it warmly and clearly, then play my friend so I can practise.",y:"The words are yours. Say only what you mean."},
- {s:"One file for birthdays and gifts",p:"A sheet in Drive: name, birthday, what they like and gifts already given.",q:"Using my friends sheet, suggest three gifts under 40 euros for the next birthday, and avoid anything I've already given.",y:"You choose and buy the gift."},
- {s:"A Monday reminder of who to celebrate",p:"The friends sheet kept up to date.",q:"Every Monday, tell me whose birthday or anniversary is in the next two weeks, with gift ideas and a draft greeting in my style.",y:"You send the greeting yourself."},
- {s:"A dinner for eight, ready to invite",p:"Calendar connected. A guest list with emails.",q:"Find two evenings in the next three weeks when I'm free, propose three restaurants near the centre for eight people and draft the invitation. Stop before sending or booking.",y:"You send the invitation and confirm the table."}
+{id:"friends",name:"Друзья",tag:"Отношения, дни рождения и время вместе.",c:[
+ {s:"Подготовиться к трудному разговору",p:"Ничего. Опишите ситуацию без настоящих имён.",q:"Мне нужно сказать близкому другу, что я больше не смогу давать ему в долг. Помоги сказать это тепло и ясно, а потом сыграй моего друга, чтобы я потренировался.",y:"Слова ваши. Говорите только то, что действительно думаете."},
+ {s:"Один файл для дней рождения и подарков",p:"Таблица на Диске: имя, день рождения, что человек любит и что вы уже дарили.",q:"По моей таблице друзей предложи три подарка до 40 евро к ближайшему дню рождения. Не повторяй то, что я уже дарил.",y:"Подарок выбираете и покупаете вы."},
+ {s:"Напоминание по понедельникам, кого поздравить",p:"Таблица друзей в актуальном состоянии.",q:"Каждый понедельник сообщай, у кого день рождения или годовщина в ближайшие две недели, с идеями подарков и черновиком поздравления в моём стиле.",y:"Поздравление вы отправляете сами."},
+ {s:"Ужин на восьмерых, осталось пригласить",p:"Подключён календарь. Список гостей с адресами почты.",q:"Найди два вечера в ближайшие три недели, когда я свободен, предложи три ресторана в центре на восемь человек и подготовь приглашение. Остановись перед отправкой и бронированием.",y:"Приглашение отправляете и столик подтверждаете вы."}
 ]},
-{id:"growth",name:"Growth",tag:"Learning, languages and new skills.",c:[
- {s:"Understand any topic, then get tested",p:"Nothing.",q:"Explain how inflation works as if I were twelve. Then ask me five questions, one at a time, and correct my answers.",y:"You check key facts in a second source."},
- {s:"A tutor that knows your course",p:"A Drive folder \"Learning\": course materials, your notes and a page on your level and goal.",q:"Using my course folder, summarise module 3 and write a 15-question test. After I answer, explain my mistakes with references to the materials.",y:"You compare the answers with the course materials."},
- {s:"Ten minutes of practice every morning",p:"A page with what you're learning and your level.",q:"Every weekday at 7:30, send me a ten-minute Portuguese lesson: five new words, one dialogue and three questions about yesterday's words.",y:"You keep the habit. It only knocks on the door."},
- {s:"A course chosen and planned into your week",p:"Calendar connected. A page with your budget, hours per week and goal.",q:"Research five online courses for my goal, compare price, length and reviews in a table, and propose study slots in my calendar for the best one. Don't enrol or pay.",y:"You enrol and pay."}
+{id:"growth",name:"Развитие",tag:"Учёба, языки и новые навыки.",c:[
+ {s:"Понять любую тему и проверить себя",p:"Ничего.",q:"Объясни, как работает инфляция, так, будто мне двенадцать лет. Потом задай пять вопросов по одному и поправь мои ответы.",y:"Ключевые факты вы проверяете по второму источнику."},
+ {s:"Репетитор, который знает ваш курс",p:"Папка «Учёба» на Диске: материалы курса, ваши конспекты и страница о вашем уровне и цели.",q:"По моей папке «Учёба» сделай конспект модуля 3 и тест из 15 вопросов. После моих ответов объясни ошибки со ссылками на материалы.",y:"Ответы вы сверяете с материалами курса."},
+ {s:"Десять минут практики каждое утро",p:"Страница о том, что вы учите и на каком вы уровне.",q:"Каждый будний день в 7:30 присылай урок португальского на десять минут: пять новых слов, один диалог и три вопроса по вчерашним словам.",y:"Привычку держите вы. Он только стучит в дверь."},
+ {s:"Курс выбран и вписан в вашу неделю",p:"Подключён календарь. Страница с бюджетом, часами в неделю и целью.",q:"Изучи пять онлайн-курсов под мою цель, сравни в таблице цену, длительность и отзывы и предложи время для занятий в моём календаре для лучшего. Не записывайся и не плати.",y:"Записываетесь и платите вы."}
 ]},
-{id:"rest",name:"Rest",tag:"Travel, weekends and time off.",c:[
- {s:"A slow three-day trip",p:"Nothing.",q:"Make a three-day Lisbon itinerary at a slow pace for two adults: no more than three stops a day, vegetarian or kosher-friendly food and a rest after lunch.",y:"You check opening hours before you go."},
- {s:"One folder per trip",p:"A Drive folder for the trip: tickets, bookings, insurance and a page with your preferences.",q:"Using the trip folder, make a day-by-day plan with addresses, booking numbers and travel times between stops.",y:"You check times against the tickets."},
- {s:"Weekend ideas every Friday",p:"A page with what you enjoy and how far you'll travel.",q:"Every Friday at 12:00, suggest three things to do this weekend within an hour of home: one outdoors, one cultural and one free.",y:"You pick one. Or none."},
- {s:"Flights and hotel, one step from booked",p:"Calendar connected. You log in to the booking sites yourself.",q:"Find flights from Riga to Lisbon for the last weekend of April and three hotels under 120 euros a night near the centre. Fill in the booking forms and stop before payment.",y:"You check names and dates, and you pay."}
+{id:"rest",name:"Отдых",tag:"Путешествия, выходные и свободное время.",c:[
+ {s:"Неспешная поездка на три дня",p:"Ничего.",q:"Составь маршрут по Лиссабону на три дня в спокойном темпе для двух взрослых: не больше трёх точек в день, вегетарианская или кошерная еда и отдых после обеда.",y:"Часы работы вы проверяете перед выходом."},
+ {s:"Одна папка на каждую поездку",p:"Папка поездки на Диске: билеты, брони, страховка и страница с вашими предпочтениями.",q:"По папке поездки составь план по дням с адресами, номерами броней и временем в пути между точками.",y:"Время вы сверяете с билетами."},
+ {s:"Идеи на выходные каждую пятницу",p:"Страница о том, что вам нравится и как далеко вы готовы ехать.",q:"Каждую пятницу в 12:00 предлагай три занятия на выходные в часе езды от дома: одно на природе, одно культурное и одно бесплатное.",y:"Вы выбираете одно. Или ни одного."},
+ {s:"Перелёт и отель в шаге от покупки",p:"Подключён календарь. На сайты бронирования вы входите сами.",q:"Найди рейсы Рига – Лиссабон на последние выходные апреля и три отеля в центре дешевле 120 евро за ночь. Заполни формы бронирования и остановись перед оплатой.",y:"Имена и даты проверяете вы. И платите тоже вы."}
 ]},
-{id:"home",name:"Home",tag:"Documents, repairs, meters and bills.",c:[
- {s:"What does this error mean?",p:"A photo of the display or the label.",q:"This is the error on my washing machine. What does it mean, what can I safely check myself and when should I call a technician?",y:"You don't open anything electrical on its advice."},
- {s:"Home documents you can ask questions",p:"A Drive folder \"Home\": rental or purchase contract, insurance, warranties, manuals and utility contracts.",q:"Using the home folder, is the dishwasher still under warranty, and what does the contract say about who pays for repairs?",y:"You read the quoted clause in the contract itself."},
- {s:"A monthly reminder of what's due",p:"A page listing meters, bills and maintenance with their dates.",q:"On the 25th of each month, remind me what's due: meter readings, bills and any maintenance from my home page, with last month's values.",y:"You submit and pay."},
- {s:"Meter readings entered, a repair visit lined up",p:"You log in to the utility site. Calendar connected.",q:"Enter this month's meter readings from my note on the utility site, and find three free slots for a plumber's visit next week. Stop before submitting or booking.",y:"You check the numbers and press Submit."}
+{id:"home",name:"Дом",tag:"Документы, ремонт, счётчики и счета.",c:[
+ {s:"Что означает эта ошибка?",p:"Фото дисплея или таблички на приборе.",q:"Это ошибка на моей стиральной машине. Что она означает, что я могу безопасно проверить сам и когда пора вызывать мастера?",y:"По его совету вы не вскрываете ничего электрического."},
+ {s:"Документы на дом, которым можно задать вопрос",p:"Папка «Дом» на Диске: договор аренды или покупки, страховка, гарантии, инструкции и договоры с коммунальными службами.",q:"По папке «Дом»: посудомоечная машина ещё на гарантии? И что сказано в договоре о том, кто платит за ремонт?",y:"Процитированный пункт вы читаете в самом договоре."},
+ {s:"Напоминание раз в месяц, что пора сделать",p:"Страница со счётчиками, счетами и обслуживанием и их сроками.",q:"25-го числа каждого месяца напоминай, что пора сделать: показания счётчиков, счета и обслуживание с моей страницы «Дом», с цифрами прошлого месяца.",y:"Передаёте показания и платите вы."},
+ {s:"Показания внесены, мастер почти вызван",p:"На сайт коммунальной службы вы входите сами. Подключён календарь.",q:"Внеси показания счётчиков за этот месяц из моей заметки на сайте коммунальной службы и найди три свободных окна для визита сантехника на следующей неделе. Остановись перед отправкой и записью.",y:"Вы проверяете цифры и нажимаете «Отправить»."}
 ]},
-{id:"community",name:"Community",tag:"Tradition, family memory and shared events.",c:[
- {s:"The weekly portion for your table",p:"Nothing.",q:"Summarise this week's Torah portion in five sentences and suggest one question that a teenager and a grandparent could both discuss at the table.",y:"You check it against the text or with your rabbi."},
- {s:"A family archive that can tell stories",p:"A Drive folder \"Family history\": scanned photos, letters, recorded stories and recipes.",q:"Using the family history folder, write a one-page story of my grandmother's life, in her own words where we have them, and list what we still don't know.",y:"You confirm facts with relatives before sharing."},
- {s:"A Shabbat brief every Thursday",p:"A page with your city, usual guests and favourite dishes.",q:"Every Thursday at 9:00, send me candle-lighting time for my city, the portion in brief, a Shabbat menu for the guests on my page and a shopping list.",y:"You check the candle-lighting time in your community calendar."},
- {s:"A community evening, organised",p:"Gmail, Drive and Calendar connected. The guest list as a sheet.",q:"Prepare our Hanukkah evening: create a registration form, a guest sheet, a task list with owners and draft reminder emails for one week and one day before. Don't send anything.",y:"You approve the texts and send them."}
+{id:"community",name:"Община",tag:"Традиция, семейная память и общие события.",c:[
+ {s:"Недельная глава для вашего стола",p:"Ничего.",q:"Перескажи недельную главу Торы в пяти предложениях и предложи один вопрос, который за столом могли бы обсудить и подросток, и бабушка.",y:"Вы сверяете с текстом или со своим раввином."},
+ {s:"Семейный архив, который умеет рассказывать",p:"Папка «История семьи» на Диске: отсканированные фото, письма, записанные рассказы и рецепты.",q:"По папке «История семьи» напиши историю жизни моей бабушки на одну страницу, её словами там, где они сохранились, и перечисли, чего мы до сих пор не знаем.",y:"Перед тем как делиться, вы уточняете факты у родных."},
+ {s:"Сводка к шабату каждый четверг",p:"Страница с вашим городом, обычными гостями и любимыми блюдами.",q:"Каждый четверг в 9:00 присылай время зажигания свечей для моего города, недельную главу вкратце, меню на шабат для гостей с моей страницы и список покупок.",y:"Время зажигания свечей вы сверяете с календарём общины."},
+ {s:"Общинный вечер организован",p:"Подключены Gmail, Диск и календарь. Список гостей в таблице.",q:"Подготовь наш ханукальный вечер: создай форму регистрации, таблицу гостей, список задач с ответственными и черновики напоминаний за неделю и за день. Ничего не отправляй.",y:"Тексты утверждаете и отправляете вы."}
 ]}
 ];
+var L={step:"Шаг ",tool:"Инструмент",prep:"Что подготовить",prompt:"Промпт",yes:"Где вы говорите «да»",copy:"Скопировать промпт",copied:"Скопировано",selected:"Выделено. Скопируйте вручную",hub:"Жизнь"};
 var NS="http://www.w3.org/2000/svg",svg=document.getElementById("wheel"),cx=230,cy=230,ro=224,ri=62,n=DATA.length,step=360/n;
 var sel=3,rung=0,wedges=[];
 function pt(r,a){var t=(a-90)*Math.PI/180;return [(cx+r*Math.cos(t)).toFixed(1),(cy+r*Math.sin(t)).toFixed(1)];}
@@ -174,19 +176,20 @@ DATA.forEach(function(d,i){
   var a0=i*step,a1=a0+step,A=pt(ro,a0),B=pt(ro,a1),C=pt(ri,a1),E=pt(ri,a0);
   var g=el("g",{"class":"wedge",tabindex:"0",role:"button","aria-label":d.name});
   g.appendChild(el("path",{d:"M"+A[0]+" "+A[1]+"A"+ro+" "+ro+" 0 0 1 "+B[0]+" "+B[1]+"L"+C[0]+" "+C[1]+"A"+ri+" "+ri+" 0 0 0 "+E[0]+" "+E[1]+"Z"}));
-  var T=pt(150,a0+step/2),t=el("text",{x:T[0],y:T[1],"text-anchor":"middle","dominant-baseline":"central"});
+  var T=pt(152,a0+step/2),t=el("text",{x:T[0],y:T[1],"text-anchor":"middle","dominant-baseline":"central"});
   t.textContent=d.name;g.appendChild(t);svg.appendChild(g);wedges.push(g);
   function go(){sel=i;rung=0;setHash();draw();}
   g.addEventListener("click",go);
   g.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}});
 });
 svg.appendChild(el("circle",{cx:cx,cy:cy,r:ri-6,"class":"hub"}));
-var hub=el("text",{x:cx,y:cy,"text-anchor":"middle","dominant-baseline":"central","class":"hubt"});hub.textContent="Your life";svg.appendChild(hub);
+var hub=el("text",{x:cx,y:cy,"text-anchor":"middle","dominant-baseline":"central","class":"hubt"});hub.textContent=L.hub;svg.appendChild(hub);
 
 var ladder=document.getElementById("ladder"),tabs=[];
 RUNGS.forEach(function(r,k){
   var b=document.createElement("button");b.type="button";b.className="rung";b.id="rung-"+k;b.setAttribute("role","tab");
-  b.innerHTML='<span class="n">Step '+(k+1)+'</span><span class="t"></span><span class="m"></span>';
+  b.innerHTML='<span class="n"></span><span class="t"></span><span class="m"></span>';
+  b.querySelector(".n").textContent=L.step+(k+1);
   b.querySelector(".t").textContent=r.t;b.querySelector(".m").textContent=r.m;
   b.addEventListener("click",function(){rung=k;draw();});
   ladder.appendChild(b);tabs.push(b);
@@ -213,17 +216,17 @@ function draw(){
   card.setAttribute("aria-labelledby","rung-"+rung);
   card.textContent="";
   var h=document.createElement("h3");h.textContent=c.s;card.appendChild(h);
-  card.appendChild(field("Tool",r.tool));
-  card.appendChild(field("What to prepare",c.p));
-  var pf=field("Prompt to copy",c.q,"prompt");
-  var cb=document.createElement("button");cb.type="button";cb.className="copy";cb.textContent="Copy prompt";
+  card.appendChild(field(L.tool,r.tool));
+  card.appendChild(field(L.prep,c.p));
+  var pf=field(L.prompt,c.q,"prompt");
+  var cb=document.createElement("button");cb.type="button";cb.className="copy";cb.textContent=L.copy;
   cb.addEventListener("click",function(){
-    var done=function(){cb.textContent="Copied";setTimeout(function(){cb.textContent="Copy prompt";},1500);};
-    var fallback=function(){var rg=document.createRange();rg.selectNodeContents(pf.querySelector("p"));var s=window.getSelection();s.removeAllRanges();s.addRange(rg);cb.textContent="Selected. Copy it now";};
+    var done=function(){cb.textContent=L.copied;setTimeout(function(){cb.textContent=L.copy;},1500);};
+    var fallback=function(){var rg=document.createRange();rg.selectNodeContents(pf.querySelector("p"));var s=window.getSelection();s.removeAllRanges();s.addRange(rg);cb.textContent=L.selected;};
     try{navigator.clipboard.writeText(c.q).then(done,fallback);}catch(err){fallback();}
   });
   pf.appendChild(cb);card.appendChild(pf);
-  card.appendChild(field("Where you say yes",c.y,"yes"));
+  card.appendChild(field(L.yes,c.y,"yes"));
   prev.disabled=rung===0;next.disabled=rung===3;
 }
 function setHash(){try{history.replaceState(null,"","#"+DATA[sel].id);}catch(e){try{location.hash=DATA[sel].id;}catch(e2){}}}
